@@ -33,13 +33,17 @@ export const getRoutes = async (): Promise<GetRoutesResponse> => {
 interface GetRouteBySlugResponse {
   data: {
     route: {
-      __typename: string;
       title: string;
+      description: string;
     };
+    languages: {
+      id: string;
+      name: string;
+    }[];
   };
 }
 
-export const getRouteBySlug = async (
+export const getPageData = async (
   slug: string
 ): Promise<GetRouteBySlugResponse> => {
   const response = await fetch(
@@ -50,8 +54,12 @@ export const getRouteBySlug = async (
         query: `
           query {
             route(path: "${slug}") {
-              __typename
               title
+              description
+            }
+            languages {
+              id
+              name
             }
           }
         `,

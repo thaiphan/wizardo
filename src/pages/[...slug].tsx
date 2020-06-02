@@ -1,10 +1,12 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
-import { getRoutes, getRouteBySlug } from "../api";
+import { getRoutes, getPageData } from "../api";
+import Link from "next/link";
 
 interface PageProps {
   title: string;
-  type: string;
+  description: string;
+  translations: { id: string; href: string; name: string }[];
 }
 
 const Page = (props: PageProps) => (
@@ -12,6 +14,23 @@ const Page = (props: PageProps) => (
     <Head>
       <title>{props.title}</title>
     </Head>
+
+    <Link href="/">
+      <a>Wizardo</a>
+    </Link>
+
+    {props.translations.length > 1 ? (
+      <ul>
+        {props.translations.map((language) => (
+          <li key={language.id}>
+            <Link href={language.href}>
+              <a>{language.name}</a>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    ) : null}
+
     <h1>{props.title}</h1>
   </div>
 );
@@ -24,12 +43,31 @@ export const getStaticProps: GetStaticProps<
   PageProps,
   PageParsedUrlQuery
 > = async (context) => {
-  const response = await getRouteBySlug(context.params.slug.join("/"));
+  let slug = context.params.slug;
+
+  const response = await getPageData(slug.join("/"));
+
+  const [prefix, ...restOfSlug] = context.params.slug;
+  if (response.data.languages.some((language) => language.id === prefix)) {
+    slug = restOfSlug;
+  }
 
   return {
     props: {
       title: response.data.route.title,
-      type: response.data.route.__typename,
+      description: response.data.route.description,
+      translations: response.data.languages.map((language) => {
+        let url = `/${slug.join("/")}`;
+        if (language.id !== "en") {
+          url = `/${language.id}` + url;
+        }
+
+        return {
+          id: language.id,
+          name: language.name,
+          href: url,
+        };
+      }),
     },
   };
 };
