@@ -2,6 +2,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import { getRoutes, getPageData } from "../api";
 import Link from "next/link";
+import parse from "html-react-parser";
 
 interface PageProps {
   title: string;
@@ -32,6 +33,7 @@ const Page = (props: PageProps) => (
     ) : null}
 
     <h1>{props.title}</h1>
+    {parse(props.description)}
   </div>
 );
 
