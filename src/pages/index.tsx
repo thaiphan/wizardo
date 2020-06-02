@@ -1,7 +1,7 @@
-import Head from "next/head";
-import Link from "next/link";
-import { GetStaticProps } from "next";
-import { getRoutes } from "../api";
+import Head from 'next/head';
+import Link from 'next/link';
+import { GetStaticProps } from 'next';
+import { getRoutes } from '../api';
 
 interface HomeProps {
   links: string[];

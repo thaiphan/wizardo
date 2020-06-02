@@ -1,8 +1,8 @@
-import { GetStaticPaths, GetStaticProps } from "next";
-import Head from "next/head";
-import { getRoutes, getPageData } from "../api";
-import Link from "next/link";
-import parse from "html-react-parser";
+import { GetStaticPaths, GetStaticProps } from 'next';
+import Head from 'next/head';
+import { getRoutes, getPageData } from '../api';
+import Link from 'next/link';
+import parse from 'html-react-parser';
 
 interface PageProps {
   title: string;
@@ -47,7 +47,7 @@ export const getStaticProps: GetStaticProps<
 > = async (context) => {
   let slug = context.params.slug;
 
-  const response = await getPageData(slug.join("/"));
+  const response = await getPageData(slug.join('/'));
 
   const [prefix, ...restOfSlug] = context.params.slug;
   if (response.data.languages.some((language) => language.id === prefix)) {
@@ -59,8 +59,8 @@ export const getStaticProps: GetStaticProps<
       title: response.data.route.title,
       description: response.data.route.description,
       translations: response.data.languages.map((language) => {
-        let url = `/${slug.join("/")}`;
-        if (language.id !== "en") {
+        let url = `/${slug.join('/')}`;
+        if (language.id !== 'en') {
           url = `/${language.id}` + url;
         }
 

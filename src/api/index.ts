@@ -10,9 +10,9 @@ interface GetRoutesResponse {
 
 export const getRoutes = async (): Promise<GetRoutesResponse> => {
   const response = await fetch(
-    "https://master-7rqtwti-xwabby2q4kkhe.au.platformsh.site/graphql",
+    'https://master-7rqtwti-xwabby2q4kkhe.au.platformsh.site/graphql',
     {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify({
         query: `
           query {
@@ -47,9 +47,9 @@ export const getPageData = async (
   slug: string
 ): Promise<GetRouteBySlugResponse> => {
   const response = await fetch(
-    "https://master-7rqtwti-xwabby2q4kkhe.au.platformsh.site/graphql",
+    'https://master-7rqtwti-xwabby2q4kkhe.au.platformsh.site/graphql',
     {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify({
         query: `
           query {
