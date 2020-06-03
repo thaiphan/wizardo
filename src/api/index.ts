@@ -1,3 +1,42 @@
+interface GetHomePageDataResponse {
+  data: {
+    routes: {
+      items: {
+        url: string;
+      }[];
+    };
+    languages: {
+      id: string;
+      name: string;
+    }[];
+  };
+}
+
+export const getHomePageData = async (): Promise<GetHomePageDataResponse> => {
+  const response = await fetch(
+    'https://master-7rqtwti-xwabby2q4kkhe.au.platformsh.site/graphql',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        query: `
+          query {
+            routes(bundles: ["page", "article"]) {
+              items {
+                url
+              }
+            }
+            languages {
+              id
+              name
+            }
+          }
+        `,
+      }),
+    }
+  );
+
+  return response.json();
+};
 interface GetRoutesResponse {
   data: {
     routes: {

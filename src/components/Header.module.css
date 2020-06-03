@@ -1,0 +1,32 @@
+.header {
+  background-color: black;
+}
+
+.header a {
+  color: white;
+  text-decoration: none;
+}
+
+.header a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1140px;
+}
+
+.inline {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.translations {
+  display: flex;
+  list-style: none;
+}
+
+.translations > li + li {
+  margin-left: 10px;
+}

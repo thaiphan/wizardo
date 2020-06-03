@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { getRoutes, getPageData } from '../api';
 import Link from 'next/link';
 import parse from 'html-react-parser';
+import { Header } from '../components/Header';
 
 interface PageProps {
   title: string;
@@ -16,21 +17,7 @@ const Page = (props: PageProps) => (
       <title>{props.title}</title>
     </Head>
 
-    <Link href="/">
-      <a>Wizardo</a>
-    </Link>
-
-    {props.translations.length > 1 ? (
-      <ul>
-        {props.translations.map((language) => (
-          <li key={language.id}>
-            <Link href={language.href}>
-              <a>{language.name}</a>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    ) : null}
+    <Header translations={props.translations} />
 
     <h1>{props.title}</h1>
     {parse(props.description)}
@@ -59,15 +46,15 @@ export const getStaticProps: GetStaticProps<
       title: response.data.route.title,
       description: response.data.route.description,
       translations: response.data.languages.map((language) => {
-        let url = `/${slug.join('/')}`;
+        let href = `/${slug.join('/')}`;
         if (language.id !== 'en') {
-          url = `/${language.id}` + url;
+          href = `/${language.id}` + href;
         }
 
         return {
           id: language.id,
           name: language.name,
-          href: url,
+          href,
         };
       }),
     },

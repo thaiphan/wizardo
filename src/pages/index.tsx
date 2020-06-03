@@ -1,10 +1,12 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { GetStaticProps } from 'next';
-import { getRoutes } from '../api';
+import { getHomePageData } from '../api';
+import { Header } from '../components/Header';
 
 interface HomeProps {
   links: string[];
+  translations: { id: string; href: string; name: string }[];
 }
 
 const Home = (props: HomeProps) => (
@@ -13,6 +15,8 @@ const Home = (props: HomeProps) => (
       <title>Create Next App</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
+
+    <Header translations={props.translations} />
 
     <ul>
       {props.links.map((link) => (
@@ -27,11 +31,23 @@ const Home = (props: HomeProps) => (
 );
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  const response = await getRoutes();
+  const response = await getHomePageData();
 
   return {
     props: {
       links: response.data.routes.items.map((route) => route.url),
+      translations: response.data.languages.map((language) => {
+        let href = '/';
+        if (language.id !== 'en') {
+          href = `/${language.id}` + href;
+        }
+
+        return {
+          id: language.id,
+          name: language.name,
+          href,
+        };
+      }),
     },
   };
 };
