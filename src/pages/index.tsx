@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { GetStaticProps } from 'next';
 import { getHomePageData } from '../api';
 import { Header } from '../components/Header';
+import styles from './index.module.css';
 
 interface HomeProps {
   links: string[];
@@ -10,7 +11,7 @@ interface HomeProps {
 }
 
 const Home = (props: HomeProps) => (
-  <div className="container">
+  <>
     <Head>
       <title>Create Next App</title>
       <link rel="icon" href="/favicon.ico" />
@@ -18,16 +19,18 @@ const Home = (props: HomeProps) => (
 
     <Header translations={props.translations} />
 
-    <ul>
-      {props.links.map((link) => (
-        <li key={link}>
-          <Link href={link}>
-            <a>{link}</a>
-          </Link>
-        </li>
-      ))}
-    </ul>
-  </div>
+    <div className={styles.container}>
+      <ul>
+        {props.links.map((link) => (
+          <li key={link}>
+            <Link href={link}>
+              <a>{link}</a>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </>
 );
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {

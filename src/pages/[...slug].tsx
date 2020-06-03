@@ -4,6 +4,7 @@ import { getRoutes, getPageData } from '../api';
 import Link from 'next/link';
 import parse from 'html-react-parser';
 import { Header } from '../components/Header';
+import styles from './[...slug].module.css';
 
 interface PageProps {
   title: string;
@@ -12,16 +13,18 @@ interface PageProps {
 }
 
 const Page = (props: PageProps) => (
-  <div className="container">
+  <>
     <Head>
       <title>{props.title}</title>
     </Head>
 
     <Header translations={props.translations} />
 
-    <h1>{props.title}</h1>
-    {parse(props.description)}
-  </div>
+    <div className={styles.container}>
+      <h1>{props.title}</h1>
+      {parse(props.description)}
+    </div>
+  </>
 );
 
 type PageParsedUrlQuery = {
