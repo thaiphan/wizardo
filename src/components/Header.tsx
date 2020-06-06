@@ -1,5 +1,34 @@
 import Link from 'next/link';
-import styles from './Header.module.css';
+import styled from 'styled-components';
+import { Container } from './Container';
+
+const StyledHeader = styled.header`
+  background-color: black;
+
+  a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
+const Inline = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Translations = styled.ul`
+  display: flex;
+  list-style: none;
+
+  > li + li {
+    margin-left: 10px;
+  }
+`;
 
 interface HeaderProps {
   translations?: { id: string; href: string; name: string }[];
@@ -7,15 +36,15 @@ interface HeaderProps {
 
 export const Header = ({ translations = [] }: HeaderProps) => {
   return (
-    <header className={styles.header}>
-      <div className={styles.container}>
-        <div className={styles.inline}>
+    <StyledHeader>
+      <Container>
+        <Inline>
           <Link href="/">
             <a>Wizardo</a>
           </Link>
 
           {translations.length > 1 ? (
-            <ul className={styles.translations}>
+            <Translations>
               {translations.map((language) => (
                 <li key={language.id}>
                   <Link href={language.href}>
@@ -23,10 +52,10 @@ export const Header = ({ translations = [] }: HeaderProps) => {
                   </Link>
                 </li>
               ))}
-            </ul>
+            </Translations>
           ) : null}
-        </div>
-      </div>
-    </header>
+        </Inline>
+      </Container>
+    </StyledHeader>
   );
 };

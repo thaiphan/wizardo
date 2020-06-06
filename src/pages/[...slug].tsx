@@ -1,10 +1,9 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import { getRoutes, getPageData } from '../api';
-import Link from 'next/link';
 import parse from 'html-react-parser';
 import { Header } from '../components/Header';
-import styles from './[...slug].module.css';
+import { Container } from '../components/Container';
 
 interface PageProps {
   title: string;
@@ -20,10 +19,10 @@ const Page = (props: PageProps) => (
 
     <Header translations={props.translations} />
 
-    <div className={styles.container}>
+    <Container>
       <h1>{props.title}</h1>
       {parse(props.description)}
-    </div>
+    </Container>
   </>
 );
 

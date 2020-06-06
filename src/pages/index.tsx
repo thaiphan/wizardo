@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { GetStaticProps } from 'next';
 import { getHomePageData } from '../api';
 import { Header } from '../components/Header';
-import styles from './index.module.css';
+import { Container } from '../components/Container';
 
 interface HomeProps {
   links: string[];
@@ -19,7 +19,7 @@ const Home = (props: HomeProps) => (
 
     <Header translations={props.translations} />
 
-    <div className={styles.container}>
+    <Container>
       <ul>
         {props.links.map((link) => (
           <li key={link}>
@@ -29,7 +29,7 @@ const Home = (props: HomeProps) => (
           </li>
         ))}
       </ul>
-    </div>
+    </Container>
   </>
 );
 
